@@ -34,6 +34,18 @@ module lab2_TB;
 	wire light_walk;
 	wire [2:0] light_main;
 	wire [2:0] light_side;
+	
+	// Masked outputs
+	wire main_r, main_y, main_g;
+	wire side_r, side_y, side_g;
+	
+	assign Rm = light_main[2];
+	assign Ym = light_main[1];
+	assign Gm = light_main[0];
+	
+	assign Rs = light_side[2];
+	assign Ys = light_side[1];
+	assign Gs = light_side[0];
 
 	// Instantiate the Unit Under Test (UUT)
 	lab2 uut (
@@ -60,6 +72,28 @@ module lab2_TB;
 		reset = 1;
 		#100;
 		reset = 0;
+		
+		// Run through normal cycle 
+		// #22000000000
+		
+		// Side Sensor alters main duration
+		sensor = 1;
+		// #9000000000
+		sensor = 0;
+		// #11000000000
+		
+		// Side Sensor alters side duration
+		// #16000000000
+		sensor = 1;
+		// #5000000000
+		sensor = 0;
+		
+		// Checking walk button latches
+		button_walk = 1;
+		#100
+		button_walk = 0;
+		
+		
 	end
 
 	always @(*) begin

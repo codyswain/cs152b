@@ -51,23 +51,21 @@ initial begin
 	state <= S1; 
 end
 
-always @ (sensor, button_walk)
+// Store walk request
+always @ (button_walk)
 begin
-	if (sensor == 1'b1) begin
-		sensor_buffer <= 1'b1;
-	end
-	if (walk_buffer == 1'b1) begin
+	if (button_walk == 1'b1) begin
 		walk_buffer <= 1'b1;
 	end
 end
 
+// State Transition Logic
 always @ (state)
 begin
 	case(state)
 		S1 : 
-			if (sensor_buffer == 1'b1) begin
+			if (sensor == 1'b1) begin
 				next_state <= S2;
-				sensor_buffer <= 1'b0;
 			end else begin
 				next_state <= S3;
 			end
@@ -82,9 +80,8 @@ begin
 			end
 		S5 : next_state <= S6;
 		S6 :
-			if (sensor_buffer == 1'b1) begin
+			if (sensor == 1'b1) begin
 				next_state <= S7;
-				sensor_buffer <= 1'b0;
 			end else begin
 				next_state <= S8;
 			end
@@ -93,47 +90,48 @@ begin
 		endcase 
 end
 
+// Set the outputs: main stoplight, side stoplight, walk lamp
 always @ (next_state)
 begin
 	case(next_state)
 	S1 : begin
-			light_main <= 3'b001;
-			light_side <= 3'b100;
+			light_main <= 3'b001; // green
+			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
 		end
 	S2 : begin
-			light_main <= 3'b001;
-			light_side <= 3'b100;
+			light_main <= 3'b001; // green
+			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
 		end
 	S3 : begin
-			light_main <= 3'b001;
-			light_side <= 3'b100;
+			light_main <= 3'b001; // green
+			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
 		end
 	S4 : begin
-			light_main <= 3'b010;
-			light_side <= 3'b100;
+			light_main <= 3'b010; // yellow
+			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
 		end
 	S5 : begin
-			light_main <= 3'b100;
-			light_side <= 3'b100;
-			light_walk <= 1'b1;
+			light_main <= 3'b100; // red
+			light_side <= 3'b100; // red
+			light_walk <= 1'b1;	 // walk light on
 		end
 	S6 : begin
-			light_main <= 3'b100;
-			light_side <= 3'b001;
+			light_main <= 3'b100; // red
+			light_side <= 3'b001; // green
 			light_walk <= 1'b0;
 		end
 	S7 : begin
-			light_main <= 3'b100;
-			light_side <= 3'b001;
+			light_main <= 3'b100; // red 
+			light_side <= 3'b001; // green
 			light_walk <= 1'b0;
 		end
 	S8 : begin
-			light_main <= 3'b100;
-			light_side <= 3'b010;
+			light_main <= 3'b100; // red
+			light_side <= 3'b010; // yellow
 			light_walk <= 1'b0;
 		end
 	endcase
