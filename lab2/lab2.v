@@ -29,9 +29,9 @@ module lab2(
 );
 
 input clk, reset, sensor, button_walk;
-output light_walk;
-output [2:0] light_main;
-output [2:0] light_side;
+output reg light_walk;
+output reg [2:0] light_main;
+output reg [2:0] light_side;
 
 reg [2:0] state;
 reg [2:0] next_state;
@@ -93,6 +93,50 @@ begin
 		endcase 
 end
 
-
+always @ (next_state)
+begin
+	case(next_state)
+	S1 : begin
+			light_main <= 3'b001;
+			light_side <= 3'b100;
+			light_walk <= 1'b0;
+		end
+	S2 : begin
+			light_main <= 3'b001;
+			light_side <= 3'b100;
+			light_walk <= 1'b0;
+		end
+	S3 : begin
+			light_main <= 3'b001;
+			light_side <= 3'b100;
+			light_walk <= 1'b0;
+		end
+	S4 : begin
+			light_main <= 3'b010;
+			light_side <= 3'b100;
+			light_walk <= 1'b0;
+		end
+	S5 : begin
+			light_main <= 3'b100;
+			light_side <= 3'b100;
+			light_walk <= 1'b1;
+		end
+	S6 : begin
+			light_main <= 3'b100;
+			light_side <= 3'b001;
+			light_walk <= 1'b0;
+		end
+	S7 : begin
+			light_main <= 3'b100;
+			light_side <= 3'b001;
+			light_walk <= 1'b0;
+		end
+	S8 : begin
+			light_main <= 3'b100;
+			light_side <= 3'b010;
+			light_walk <= 1'b0;
+		end
+	endcase
+end
 
 endmodule
