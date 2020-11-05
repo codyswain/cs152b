@@ -46,7 +46,16 @@ begin
 			end else begin
 				next_state <= S3;
 			end
-		S2 :
+		S2 : next_state <= S4;
+		S3 : next_state <= S4;
+		S4 : 
+			if (button_walk == 1'b1) begin
+				next_state <= S5;
+			end else begin 
+				next_state <= S6;
+			end
+		S5 : 
+		
 			
 end
 
