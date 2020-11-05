@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="TimerFunctionsTest" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="8" />
+   <wvobject fp_name="/TimerFunctionsTest/timer" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">timer</obj_property>
+      <obj_property name="ObjectShortName">timer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/which_clk" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">which_clk[1:0]</obj_property>
+      <obj_property name="ObjectShortName">which_clk[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/uut/twelve_seconds_count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">twelve_seconds_count[3:0]</obj_property>
+      <obj_property name="ObjectShortName">twelve_seconds_count[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/uut/six_seconds_count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">six_seconds_count[2:0]</obj_property>
+      <obj_property name="ObjectShortName">six_seconds_count[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/uut/three_seconds_count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">three_seconds_count[1:0]</obj_property>
+      <obj_property name="ObjectShortName">three_seconds_count[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TimerFunctionsTest/uut/two_seconds_count" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">two_seconds_count</obj_property>
+      <obj_property name="ObjectShortName">two_seconds_count</obj_property>
+   </wvobject>
+</wave_config>

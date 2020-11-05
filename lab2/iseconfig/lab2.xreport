@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2020-11-05T21:44:37</DateModified>
-  <ModuleName>Clock_test</ModuleName>
+  <DateModified>2020-11-05T23:43:44</DateModified>
+  <ModuleName>lab2</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/iseconfig/lab2.xreport</SavedFilePath>
   <ImplementationReportsDirectory>/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/</ImplementationReportsDirectory>
