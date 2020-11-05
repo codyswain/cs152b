@@ -35,6 +35,7 @@ output [2:0] light_side;
 
 reg [2:0] state;
 reg [2:0] next_state;
+reg sensor_buffer, walk_buffer;
 
 parameter S1=3'b000, S2=3'b001, S3=3'b010, S4=3'b011, S5=3'b100, S6=3'b101, S7=3'b110, S8=3'b111;
 
@@ -45,28 +46,53 @@ Clock seconds_clk(
 	.reset(reset),
 	.seconds(seconds)
     );
+	
+initial begin
+	state <= S1; 
+end
+
+always @ (sensor, button_walk)
+begin
+	if (sensor == 1'b1) begin
+		sensor_buffer <= 1'b1;
+	end
+	if (walk_buffer == 1'b1) begin
+		walk_buffer <= 1'b1;
+	end
+end
 
 always @ (state)
 begin
 	case(state)
 		S1 : 
-			if (sensor == 1'b1) begin
+			if (sensor_buffer == 1'b1) begin
 				next_state <= S2;
+				sensor_buffer <= 1'b0;
 			end else begin
 				next_state <= S3;
 			end
 		S2 : next_state <= S4;
 		S3 : next_state <= S4;
 		S4 : 
-			if (button_walk == 1'b1) begin
+			if (walk_buffer == 1'b1) begin
 				next_state <= S5;
+				walk_buffer <= 1'b0;
 			end else begin 
 				next_state <= S6;
 			end
-		endcase
-		//S5 : 
-			
-			
+		S5 : next_state <= S6;
+		S6 :
+			if (sensor_buffer == 1'b1) begin
+				next_state <= S7;
+				sensor_buffer <= 1'b0;
+			end else begin
+				next_state <= S8;
+			end
+		S7 : next_state <= S8;
+		S8 : next_state <= S1;
+		endcase 
 end
+
+
 
 endmodule
