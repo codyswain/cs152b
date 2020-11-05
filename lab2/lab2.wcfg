@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/ise/Xilinx_shared/cs152b/lab2/lab2_TB_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="lab2_TB" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/lab2_TB/light_walk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">light_walk</obj_property>
+      <obj_property name="ObjectShortName">light_walk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/light_main" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">light_main[2:0]</obj_property>
+      <obj_property name="ObjectShortName">light_main[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/light_side" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">light_side[2:0]</obj_property>
+      <obj_property name="ObjectShortName">light_side[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/sensor" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">sensor</obj_property>
+      <obj_property name="ObjectShortName">sensor</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/button_walk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">button_walk</obj_property>
+      <obj_property name="ObjectShortName">button_walk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/seconds" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">seconds</obj_property>
+      <obj_property name="ObjectShortName">seconds</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">count[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/SECONDS_CLK" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">SECONDS_CLK</obj_property>
+      <obj_property name="ObjectShortName">SECONDS_CLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/seconds_clk/TIMESCALE_HALF_SECOND" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">TIMESCALE_HALF_SECOND[31:0]</obj_property>
+      <obj_property name="ObjectShortName">TIMESCALE_HALF_SECOND[31:0]</obj_property>
+   </wvobject>
+</wave_config>
