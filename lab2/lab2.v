@@ -37,6 +37,15 @@ reg [2:0] next_state;
 
 parameter S1=3'b000, S2=3'b001, S3=3'b010, S4=3'b011, S5=3'b100, S6=3'b101, S7=3'b110, S8=3'b111;
 
+reg reset;
+wire seconds;
+
+Clock seconds_clk(
+	.clk(clk),
+	.reset(reset),
+	.seconds(seconds)
+    );
+
 always @ (state)
 begin
 	case(state)
@@ -54,8 +63,8 @@ begin
 			end else begin 
 				next_state <= S6;
 			end
-		S5 : 
-		
+		//S5 : 
+			
 			
 end
 
