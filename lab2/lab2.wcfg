@@ -10,7 +10,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="13" />
    <wvobject fp_name="/lab2_TB/light_walk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">light_walk</obj_property>
       <obj_property name="ObjectShortName">light_walk</obj_property>
@@ -43,20 +43,27 @@
       <obj_property name="ElementShortName">which_clk[1:0]</obj_property>
       <obj_property name="ObjectShortName">which_clk[1:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/uut/next_state" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">next_state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">next_state[2:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/lab2_TB/uut/state" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">state[2:0]</obj_property>
       <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/next_state" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">next_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/lab2_TB/uut/timer" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">timer</obj_property>
       <obj_property name="ObjectShortName">timer</obj_property>
    </wvobject>
    <wvobject fp_name="/lab2_TB/uut/seconds" type="logic" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
       <obj_property name="ElementShortName">seconds</obj_property>
       <obj_property name="ObjectShortName">seconds</obj_property>
+      <obj_property name="label">half_seconds</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/cycle_count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cycle_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cycle_count[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

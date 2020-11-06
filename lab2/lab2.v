@@ -58,13 +58,6 @@ TimerFunctions timers (
 		.timer(timer)
 	);
 
-/*	
-initial begin
-	state <= S1;
-	which_clk <= 2'b00;
-end
-*/
-
 // Store walk request
 always @ (button_walk)
 begin

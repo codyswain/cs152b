@@ -9,10 +9,10 @@ Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2.v" in
 Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" into library work
 Analyzing Verilog file "/opt/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
 Starting static elaboration
-WARNING:HDLCompiler:1330 - "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 86: Function set_inputs has no return value assignment
+WARNING:HDLCompiler:1330 - "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 233: Function set_inputs has no return value assignment
 Completed static elaboration
-Fuse Memory Usage: 94916 KB
-Fuse CPU Usage: 440 ms
+Fuse Memory Usage: 95052 KB
+Fuse CPU Usage: 450 ms
 Compiling module Clock
 Compiling module TimerFunctions
 Compiling module lab2
@@ -21,6 +21,6 @@ Compiling module glbl
 Time Resolution for simulation is 1ps.
 Compiled 5 Verilog Units
 Built simulation executable /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.exe
-Fuse Memory Usage: 98096 KB
-Fuse CPU Usage: 460 ms
-GCC CPU Usage: 200 ms
+Fuse Memory Usage: 98456 KB
+Fuse CPU Usage: 470 ms
+GCC CPU Usage: 280 ms

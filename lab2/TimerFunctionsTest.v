@@ -53,7 +53,7 @@ module TimerFunctionsTest;
 		#500;
 		reset = 0;
       #500;
-		// Add stimulus here
+
 		
 	end
 	

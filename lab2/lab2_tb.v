@@ -48,6 +48,8 @@ module lab2_TB;
 	assign Rs = light_side[2];
 	assign Ys = light_side[1];
 	assign Gs = light_side[0];
+	
+	integer cycle_count;
 
 	// Instantiate the Unit Under Test (UUT)
 	lab2 uut (
@@ -75,29 +77,174 @@ module lab2_TB;
 		// Add stimulus here
 		reset = 1;
 		#100;
-		reset = 0;		
+		reset = 0;
+	
+		// startup
+		for (cycle_count = 0; cycle_count < 100; cycle_count = cycle_count + 1) begin
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+
+		// Regular Operation
+		for (cycle_count = 0; cycle_count < 300; cycle_count = cycle_count + 1) begin
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Walk Signal Always High
+		set_inputs(2'b01);		
+		
+		for (cycle_count = 0; cycle_count < 300; cycle_count = cycle_count + 1) begin
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Walk Signal Intermittently High
+		set_inputs(2'b01);		
+		
+		for (cycle_count = 0; cycle_count < 300; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 5)
+				set_inputs(2'b00);
+			else
+				set_inputs(2'b01);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+				
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Walk Signal Intermittently High, slower
+		set_inputs(2'b01);		
+		
+		for (cycle_count = 0; cycle_count < 400; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 120)
+				set_inputs(2'b00);
+			else
+				set_inputs(2'b01);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+				
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Sensor Signal Always High (main and side)
+		set_inputs(2'b10);		
+		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Sensor Signal High during main, not side
+		set_inputs(2'b00);		
+		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 49)
+				set_inputs(2'b00);
+			else
+				set_inputs(2'b10);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Sensor Signal High during side, not main
+		set_inputs(2'b00);		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 60)
+				set_inputs(2'b00);
+			else
+				set_inputs(2'b10);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Sensor Signal and Walk Signal Always High (main and side)
+		set_inputs(2'b11);		
+		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		
+		// Sensor high, Walk Signal Intermittently High
+		set_inputs(2'b10);		
+		
+		for (cycle_count = 0; cycle_count < 300; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 5)
+				set_inputs(2'b10);
+			else
+				set_inputs(2'b11);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+				
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		// Sensor high, Walk Signal Intermittently High, slower
+		set_inputs(2'b10);		
+		
+		for (cycle_count = 0; cycle_count < 400; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 120)
+				set_inputs(2'b10);
+			else
+				set_inputs(2'b11);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+			
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+
+		
+		$finish;
 	end
+
 
 	always @(*) begin
 		#100 clk <= ~clk;
 		#100 clk <= ~clk;
 	end
-	
+
 	function set_inputs;
 		input [1:0] inputs;
 		begin
-			sensor = 1;
-			//sensor = 0;
+			sensor = inputs[1];
 			button_walk = inputs[0];
 		end
 	endfunction
 	
+	/*
 	always @(*) begin
 		#200;
 		set_inputs(input_vals);
 		input_vals <= input_vals + 1;
 	end
-
+	*/
  
 endmodule
 
