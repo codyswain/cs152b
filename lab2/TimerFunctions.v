@@ -67,7 +67,7 @@ module TimerFunctions(
 						
 						twelve_seconds_count <= twelve_seconds_count + 1;
 						if (twelve_seconds_count === 11) begin
-							timer_reg = ~timer_reg;
+							timer_reg <= ~timer_reg;
 							twelve_seconds_count <= 0;
 						end
 					end
@@ -80,7 +80,7 @@ module TimerFunctions(
 						
 						six_seconds_count <= six_seconds_count + 1;
 						if (six_seconds_count === 5) begin
-							timer_reg = ~timer_reg;
+							timer_reg <= ~timer_reg;
 							six_seconds_count <= 0;
 						end
 					end
@@ -93,7 +93,7 @@ module TimerFunctions(
 						
 						three_seconds_count <= three_seconds_count + 1;
 						if (three_seconds_count === 2) begin
-							timer_reg = ~timer_reg;
+							timer_reg <= ~timer_reg;
 							three_seconds_count <= 0;
 						end
 					end
@@ -106,7 +106,7 @@ module TimerFunctions(
 
 						two_seconds_count <= two_seconds_count + 1;
 						if (two_seconds_count === 1) begin
-							timer_reg = ~timer_reg;
+							timer_reg <= ~timer_reg;
 							two_seconds_count <= 0;
 						end
 					end
