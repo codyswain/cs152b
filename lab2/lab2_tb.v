@@ -220,6 +220,37 @@ module lab2_TB;
 		#500 clk <= ~clk;
 		#500 clk <= ~clk;
 
+		// Sensor Signal High during main, not side, walk button high
+		set_inputs(2'b01);		
+		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 108)
+				set_inputs(2'b01);
+			else
+				set_inputs(2'b11);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		set_inputs(2'b00);
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
+		
+		// Sensor Signal High during side, not main, walk signal high
+		set_inputs(2'b00);		
+		for (cycle_count = 0; cycle_count < 600; cycle_count = cycle_count + 1) begin
+			if (cycle_count % 343)
+				set_inputs(2'b01);
+			else
+				set_inputs(2'b10);
+			#100 clk <= ~clk;
+			#100 clk <= ~clk;
+		end
+		
+		#500 clk <= ~clk;
+		#500 clk <= ~clk;
+		
 		
 		$finish;
 	end

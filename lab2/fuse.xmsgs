@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="1330" delta="unknown" >"/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 233: Function <arg fmt="%s" index="1">set_inputs</arg> has no return value assignment
+<msg type="warning" file="HDLCompiler" num="1330" delta="unknown" >"/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 264: Function <arg fmt="%s" index="1">set_inputs</arg> has no return value assignment
 </msg>
 
 </messages>
