@@ -645,6 +645,6 @@ LAB76:    t32 = *((unsigned int *)t17);
 extern void work_m_10810410325643148362_1053587592_init()
 {
 	static char *pe[] = {(void *)Cont_48_0,(void *)Always_50_1};
-	xsi_register_didat("work_m_10810410325643148362_1053587592", "isim/TimerFunctionsTest_isim_beh.exe.sim/work/m_10810410325643148362_1053587592.didat");
+	xsi_register_didat("work_m_10810410325643148362_1053587592", "isim/lab2_TB_isim_beh.exe.sim/work/m_10810410325643148362_1053587592.didat");
 	xsi_register_executes(pe);
 }

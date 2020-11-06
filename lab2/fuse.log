@@ -1,23 +1,26 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_isim_beh.exe -prj /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_beh.prj work.TimerFunctionsTest work.glbl 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.exe -prj /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_beh.prj work.lab2_TB work.glbl 
 ISim P.20160913 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 1
 Turning on mult-threading, number of parallel sub-compilation jobs: 0 
 Determining compilation order of HDL files
 Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/Clock.v" into library work
 Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctions.v" into library work
-Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest.v" into library work
+Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2.v" into library work
+Analyzing Verilog file "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" into library work
 Analyzing Verilog file "/opt/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
 Starting static elaboration
+WARNING:HDLCompiler:1330 - "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 86: Function set_inputs has no return value assignment
 Completed static elaboration
-Fuse Memory Usage: 94924 KB
-Fuse CPU Usage: 450 ms
+Fuse Memory Usage: 94916 KB
+Fuse CPU Usage: 440 ms
 Compiling module Clock
 Compiling module TimerFunctions
-Compiling module TimerFunctionsTest
+Compiling module lab2
+Compiling module lab2_TB
 Compiling module glbl
 Time Resolution for simulation is 1ps.
-Compiled 4 Verilog Units
-Built simulation executable /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_isim_beh.exe
-Fuse Memory Usage: 98060 KB
+Compiled 5 Verilog Units
+Built simulation executable /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.exe
+Fuse Memory Usage: 98096 KB
 Fuse CPU Usage: 460 ms
-GCC CPU Usage: 150 ms
+GCC CPU Usage: 200 ms

@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest_isim_beh.wdb 
+Running: /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.wdb 
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -14,57 +14,8 @@ Time resolution is 1 ps
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
 # restart
-# run 100.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-# restart
-# run 100.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-# restart
-# run 10000.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-changing now
-# run all
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-Stopped at time : 323640400 ns : File "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest.v" Line 61
-# restart
-# restart
 # run all
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-changing now
-Stopped at time : 312341300 ns : File "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/TimerFunctionsTest.v" Line 60
+Stopped at time : 142924700 ns : File "/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB.v" Line 82
 # exit 0

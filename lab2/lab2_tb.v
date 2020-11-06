@@ -30,6 +30,8 @@ module lab2_TB;
 	reg sensor;
 	reg button_walk;
 
+	reg [1:0] input_vals;
+
 	// Outputs
 	wire light_walk;
 	wire [2:0] light_main;
@@ -64,6 +66,8 @@ module lab2_TB;
 		reset = 0;
 		sensor = 0;
 		button_walk = 0;
+		
+		input_vals = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
@@ -71,34 +75,29 @@ module lab2_TB;
 		// Add stimulus here
 		reset = 1;
 		#100;
-		reset = 0;
-		
-		// Run through normal cycle 
-		// #22000000000
-		
-		// Side Sensor alters main duration
-		sensor = 1;
-		// #9000000000
-		sensor = 0;
-		// #11000000000
-		
-		// Side Sensor alters side duration
-		// #16000000000
-		sensor = 1;
-		// #5000000000
-		sensor = 0;
-		
-		// Checking walk button latches
-		button_walk = 1;
-		#100
-		button_walk = 0;
-		
-		
+		reset = 0;		
 	end
 
 	always @(*) begin
 		#100 clk <= ~clk;
+		#100 clk <= ~clk;
 	end
-      
+	
+	function set_inputs;
+		input [1:0] inputs;
+		begin
+			sensor = 1;
+			//sensor = 0;
+			button_walk = inputs[0];
+		end
+	endfunction
+	
+	always @(*) begin
+		#200;
+		set_inputs(input_vals);
+		input_vals <= input_vals + 1;
+	end
+
+ 
 endmodule
 
