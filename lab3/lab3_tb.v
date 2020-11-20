@@ -87,7 +87,11 @@ module lab3_tb;
 		end
 		
 		// Perform data processing
-		enable = 0; enable_process = 1; #2;
+		enable = 0; enable_process = 1;
+	end
+	
+	// Triggered when processing is finished
+	always @(finish) begin
 		for (pixel=0; pixel<WIDTH*DEPTH; pixel=pixel+1) begin
 			if (pixel == WIDTH*DEPTH-1) begin
 				$fwrite(fd_out, "%d", image_output);
@@ -95,11 +99,12 @@ module lab3_tb;
 				$fwrite(fd_out, "%d,", image_output); #2;
 			end
 		end
+		
 		// Clean up
 		$fclose(fd_in);
 		$fclose(fd_out);
-		
 	end
+	
 	
 	/* Alternative way to read in text input
 	always @(posedge clk) begin
