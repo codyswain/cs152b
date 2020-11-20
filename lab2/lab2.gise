@@ -41,6 +41,10 @@
     <transform xil_pn:end_ts="1604617915" xil_pn:in_ck="2223490182552255471" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1604617915">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Clock.v"/>
       <outfile xil_pn:name="lab2.v"/>
       <outfile xil_pn:name="lab2_TB.v"/>
@@ -60,6 +64,11 @@
     <transform xil_pn:end_ts="1604617915" xil_pn:in_ck="2223490182552255471" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1604617915">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Clock.v"/>
       <outfile xil_pn:name="lab2.v"/>
       <outfile xil_pn:name="lab2_TB.v"/>
@@ -67,6 +76,11 @@
     <transform xil_pn:end_ts="1604617922" xil_pn:in_ck="2223490182552255471" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="26622679517550010" xil_pn:start_ts="1604617915">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
       <outfile xil_pn:name="lab2_TB_beh.prj"/>
@@ -76,6 +90,9 @@
     <transform xil_pn:end_ts="1604617923" xil_pn:in_ck="-3430567882205102987" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="8287357621669566365" xil_pn:start_ts="1604617922">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="lab2_TB_isim_beh.wdb"/>
     </transform>
