@@ -85,9 +85,9 @@ always @(posedge clk) begin
 	if (enable) begin
 		full_image[row_ptr_in][col_ptr_in] = image_input;
 		if (row_ptr_in + 1 == WIDTH) begin
-			row_ptr_in = pad_half;
+			row_ptr_in = pad_half; // reset
 			if (col_ptr_in + 1 == DEPTH) begin
-				col_ptr_in = pad_half;
+				col_ptr_in = pad_half; // reset
 			end else begin
 				col_ptr_in = col_ptr_in + 1;
 			end
@@ -96,7 +96,29 @@ always @(posedge clk) begin
 		end
 	end
 	
+	// HERE: Image loaded into full_image variable 410 x 361
 	if (!enable && enable_process) begin
+	
+		// Median Filter
+		// 1. For row, col, load cartesian product of (row-1,row,row+1)x(col-1,col,col+1)
+		// 	into a list of window*window size
+		// 2. Sort this list
+		// 3. For row_idx, col_idx, take window_size*window_size//2 and place into output
+		
+		// Resize Filter
+		// 1. If resize_type == 0 (reduce): row=pad_half*2, col=pad_half*2
+		// * number of iterations will be width-(window//2)
+		// * and depth-(window//2)
+		// * where you get avg from cartesian product of (row-1,row,row+1)x(col-1,col,col+1)
+		// * and place that in output at row, col
+		// * 
+		// 2. If resize_type == 1 (increase): 7 
+		// * For a given image of WIDTH, DEPTH
+		// * increased will be of size WIDTH*window, DEPTH*window
+		// * for row, col in original, populate cartesian product of [row*3:row*3+2]x[col*3:col*3+2]
+		// * with the value of the pixel at row, col
+		
+		
 		// Write matrix to image output
 		image_output = full_image[row_ptr_out][col_ptr_out];
 		if (row_ptr_out + 1 == WIDTH) begin
@@ -111,7 +133,6 @@ always @(posedge clk) begin
 			row_ptr_out = row_ptr_out + 1;
 		end
 	end
-	
 end
 
 endmodule
