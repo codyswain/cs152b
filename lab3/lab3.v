@@ -83,6 +83,7 @@ initial begin
 	end
 end
 
+
 always @(posedge clk) begin
 
 	// Populate raw_image matrix
@@ -100,20 +101,22 @@ always @(posedge clk) begin
 		end
 	end
 	
-	// Processing
+	// Filtering / Image Processing
 	if (!enable && enable_process && !finish) begin
-		
-		// Case determines computation
 		case (1) 
-			3'b000  : begin // Low pass filter
+		
+			// Low Pass Filter
+			3'b000  : begin
 				pixel_avg = 
 					raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
 					raw_image[rpo-1][cpo] + raw_image[rpo][cpo] + raw_image[rpo+1][cpo] +
 					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1];
 				pixel_avg = pixel_avg / 9;
-				processed_image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+				processed_image[rpo][cpo] = pixel_avg[7:0];
 			end
-			3'b001 : begin // Median Filter
+			
+			// Median Filter
+			3'b001 : begin
 				k = 0; 
 				for (i = rpo - (FILTER_SIZE /2); i <= rpo + (FILTER_SIZE /2); i=i+1) begin
 					for (j = cpo - (FILTER_SIZE /2); j <= cpo + (FILTER_SIZE /2); j=j+1) begin
@@ -126,19 +129,21 @@ always @(posedge clk) begin
 				end
 				processed_image[rpo][cpo] = return_median(window);
 			end
-			3'b010  : begin // High pass filter
+			
+			// High Pass Filter
+			3'b010  : begin
 				pixel_avg = 8*raw_image[rpo][cpo] - 
 					(raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
 					raw_image[rpo-1][cpo] + raw_image[rpo+1][cpo] +
 					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1]);
 				pixel_avg = pixel_avg / 9;
-				processed_image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+				processed_image[rpo][cpo] = pixel_avg[7:0];
 			end
 			default : begin
 			end 
 		 endcase
 		 
-		 // Iterate through image cordinates
+		 // Update current row & col positions
 		 if (rpo + 1 == WIDTH) begin
 			rpo = img_start;
 			if (cpo + 1 == DEPTH) begin
@@ -166,33 +171,6 @@ always @(posedge clk) begin
 			rpo = rpo + 1;
 		end
 	end
-	
-	
 end
 
 endmodule
-
-
-
-	
-		// Median Filter
-		// 1. For row, col, load cartesian product of (row-1,row,row+1)x(col-1,col,col+1)
-		// 	into a list of window*window size
-		// 2. Sort this list
-		// 3. For row_idx, col_idx, take window_size*window_size//2 and place into output
-		
-		// Resize Filter
-		// 1. If resize_type == 0 (reduce): row=pad_half*2, col=pad_half*2
-		// * size of output: WIDTH-(window//2)
-		// * number of iterations will be width-(window//2)
-		// * and depth-(window//2)
-		// * where you get avg from cartesian product of (row-1,row,row+1)x(col-1,col,col+1)
-		// * and place that in output at row, col
-		//  
-		// 2. If resize_type == 1 (increase): 7 
-		// * For a given image of WIDTH, DEPTH
-		// * increased will be of size WIDTH*window, DEPTH*window
-		// * for row, col in original, populate cartesian product of [row*3:row*3+2]x[col*3:col*3+2]
-		// * with the value of the pixel at row, col
-		
-		// Write matrix to image output

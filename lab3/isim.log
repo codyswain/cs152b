@@ -15,4 +15,3 @@ Simulator is doing circuit initialization process.
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 Finished circuit initialization process.
-# exit 0
