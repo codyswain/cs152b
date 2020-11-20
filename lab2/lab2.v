@@ -46,16 +46,35 @@ Clock seconds_clk(
 	.reset(reset),
 	.seconds(seconds)
     );
-	
-initial begin
-	state <= S1; 
-end
+	 
+wire timer;
+reg [1:0] which_clk;
+
+// timer for 12, 6, 3, 2 seconds
+TimerFunctions timers (
+		.clk(clk), 
+		.reset(reset), 
+		.which_clk(which_clk), 
+		.timer(timer)
+	);
 
 // Store walk request
 always @ (button_walk)
 begin
 	if (button_walk == 1'b1) begin
 		walk_buffer <= 1'b1;
+	end
+end
+
+// changing state to next state
+always @(posedge clk) begin
+	if (reset) begin
+		state <= S1;
+	   which_clk <= 2'b01;
+	end else begin
+		@(posedge timer) begin
+			state <= next_state;
+		end
 	end
 end
 
@@ -91,48 +110,73 @@ begin
 end
 
 // Set the outputs: main stoplight, side stoplight, walk lamp
-always @ (next_state)
+always @ (next_state, which_clk)
 begin
 	case(next_state)
 	S1 : begin
 			light_main <= 3'b001; // green
 			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
+			
+			// Six second delay
+			which_clk <= 2'b01;
+			//@(posedge timer) begin $display("done this"); end
 		end
 	S2 : begin
 			light_main <= 3'b001; // green
 			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
+			
+			// Three second delay
+			which_clk <= 2'b10;
 		end
 	S3 : begin
 			light_main <= 3'b001; // green
 			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
+			
+			// Six second delay
+			which_clk <= 2'b01;
 		end
 	S4 : begin
 			light_main <= 3'b010; // yellow
 			light_side <= 3'b100; // red
 			light_walk <= 1'b0;
+			
+			// Two second delay
+			which_clk <= 2'b11;
 		end
 	S5 : begin
 			light_main <= 3'b100; // red
 			light_side <= 3'b100; // red
 			light_walk <= 1'b1;	 // walk light on
+			
+			// Three second delay
+			which_clk <= 2'b10;
 		end
 	S6 : begin
 			light_main <= 3'b100; // red
 			light_side <= 3'b001; // green
 			light_walk <= 1'b0;
+			
+			// Six second delay
+			which_clk <= 2'b01;
 		end
 	S7 : begin
 			light_main <= 3'b100; // red 
 			light_side <= 3'b001; // green
 			light_walk <= 1'b0;
+			
+			// Three second delay
+			which_clk <= 2'b10;
 		end
 	S8 : begin
 			light_main <= 3'b100; // red
 			light_side <= 3'b010; // yellow
 			light_walk <= 1'b0;
+			
+			// Two second delay
+			which_clk <= 2'b11;
 		end
 	endcase
 end

@@ -1,4 +1,5 @@
 verilog work "Clock.v"
+verilog work "TimerFunctions.v"
 verilog work "lab2.v"
 verilog work "lab2_TB.v"
 verilog work "/opt/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"

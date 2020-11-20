@@ -25,7 +25,7 @@ module Clock(
 	seconds
     );
 	
-	parameter TIMESCALE_HALF_SECOND = 4000; 
+	parameter TIMESCALE_HALF_SECOND = 1;//4000; 
 	
 	input clk, reset;
 	reg [31:0] count;

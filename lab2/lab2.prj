@@ -1,0 +1,3 @@
+verilog work "Clock.v"
+verilog work "TimerFunctions.v"
+verilog work "lab2.v"

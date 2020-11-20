@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/ise/Xilinx_shared/cs152b/lab2/lab2_TB_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="/home/ise/Xilinx_Shared/cody_repo/cs152b/lab2/lab2_TB_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="glbl" />
             <top_module name="lab2_TB" />
@@ -23,29 +23,23 @@
       <obj_property name="ElementShortName">light_side[2:0]</obj_property>
       <obj_property name="ObjectShortName">light_side[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/Rm" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Rm</obj_property>
-      <obj_property name="ObjectShortName">Rm</obj_property>
+   <wvobject fp_name="/lab2_TB/uut/timer" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">timer</obj_property>
+      <obj_property name="ObjectShortName">timer</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/Ym" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Ym</obj_property>
-      <obj_property name="ObjectShortName">Ym</obj_property>
+   <wvobject fp_name="/lab2_TB/uut/seconds" type="logic" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">seconds</obj_property>
+      <obj_property name="ObjectShortName">seconds</obj_property>
+      <obj_property name="label">half_seconds</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/Gm" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Gm</obj_property>
-      <obj_property name="ObjectShortName">Gm</obj_property>
+   <wvobject fp_name="/lab2_TB/sensor" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">sensor</obj_property>
+      <obj_property name="ObjectShortName">sensor</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/Rs" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Rs</obj_property>
-      <obj_property name="ObjectShortName">Rs</obj_property>
-   </wvobject>
-   <wvobject fp_name="/lab2_TB/Ys" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Ys</obj_property>
-      <obj_property name="ObjectShortName">Ys</obj_property>
-   </wvobject>
-   <wvobject fp_name="/lab2_TB/Gs" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Gs</obj_property>
-      <obj_property name="ObjectShortName">Gs</obj_property>
+   <wvobject fp_name="/lab2_TB/button_walk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">button_walk</obj_property>
+      <obj_property name="ObjectShortName">button_walk</obj_property>
    </wvobject>
    <wvobject fp_name="/lab2_TB/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -55,12 +49,21 @@
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/sensor" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">sensor</obj_property>
-      <obj_property name="ObjectShortName">sensor</obj_property>
+   <wvobject fp_name="/lab2_TB/uut/which_clk" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">which_clk[1:0]</obj_property>
+      <obj_property name="ObjectShortName">which_clk[1:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/lab2_TB/button_walk" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">button_walk</obj_property>
-      <obj_property name="ObjectShortName">button_walk</obj_property>
+   <wvobject fp_name="/lab2_TB/uut/state" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/uut/next_state" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">next_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/lab2_TB/cycle_count" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cycle_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cycle_count[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>
