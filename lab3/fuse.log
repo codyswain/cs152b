@@ -8,14 +8,14 @@ Analyzing Verilog file "/home/ise/Xilinx_shared/cs152b/lab3/lab3_tb.v" into libr
 Analyzing Verilog file "/opt/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 94992 KB
-Fuse CPU Usage: 2800 ms
+Fuse Memory Usage: 94996 KB
+Fuse CPU Usage: 2720 ms
 Compiling module lab3_default
 Compiling module lab3_tb
 Compiling module glbl
 Time Resolution for simulation is 1ps.
 Compiled 3 Verilog Units
 Built simulation executable /home/ise/Xilinx_shared/cs152b/lab3/lab3_tb_isim_beh.exe
-Fuse Memory Usage: 98496 KB
-Fuse CPU Usage: 2900 ms
-GCC CPU Usage: 1240 ms
+Fuse Memory Usage: 98500 KB
+Fuse CPU Usage: 2860 ms
+GCC CPU Usage: 1300 ms

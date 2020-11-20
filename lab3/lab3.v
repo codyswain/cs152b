@@ -31,6 +31,7 @@ input [7:0] image_input;
 input enable, enable_process, clk;
 output reg [7:0] image_output;
 output reg finish;
+reg done; 
 
 // Image & Filter Size
 parameter WIDTH = 410;
@@ -38,30 +39,33 @@ parameter DEPTH = 361;
 parameter FILTER_SIZE = 3;
 `include "MedianFilter.v"
 
-// This is the processed image
-reg [7:0] full_image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
-reg [7:0] image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
+// Raw & Processed Image Memory
+reg [7:0] raw_image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
+reg [7:0] processed_image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
 
-// Current position (input, output, output1) 
+// Actual image starting position (adjusted for padding)
+reg [3:0] img_start;
+
+// Current position (input & output) 
 reg [8:0] rpi;
 reg [8:0] cpi;
 reg [8:0] rpo;
 reg [8:0] cpo;
 
-// Actual image starting position (not padding)
-reg [3:0] img_start;
+// Median Filter Variables
+reg [10:0] pixel_avg;
+reg [FILTER_SIZE*FILTER_SIZE*8:0] window;
+
+
+// Loop counters
 integer row, col;
 integer i, j, k;
 
-// Medium Filter Pixel Average
-reg [10:0] pixel_avg;
-
-// Median Filter Variable Sized Window
-reg [FILTER_SIZE*FILTER_SIZE*8:0] window;
-
-reg done; 
-
 initial begin
+	done = 0;
+	finish = 0;
+
+	// Adjusted image start coordinate (w/ padding)
 	assign img_start = FILTER_SIZE >> 1;
 	
 	// Set inital values for reading pixels
@@ -70,22 +74,20 @@ initial begin
 	rpo = img_start;
 	cpo = img_start;
 	
-	// Zero pad the 2D image matrix
+	// Zero pad the 2D image matrices
 	for (row=0; row<WIDTH+(FILTER_SIZE-1); row=row+1) begin
 		for (col=0; col<DEPTH+(FILTER_SIZE-1); col=col+1) begin
-			full_image[row][col] = 0;
-			image[row][col] = 0;
+			raw_image[row][col] = 0;
+			processed_image[row][col] = 0;
 		end
 	end
-	
-	done = 0;
-	finish = 0;
 end
 
 always @(posedge clk) begin
-	// Populate full_image matrix
+
+	// Populate raw_image matrix
 	if (enable) begin
-		full_image[rpi][cpi] = image_input;
+		raw_image[rpi][cpi] = image_input;
 		if (rpi + 1 == WIDTH) begin
 			rpi = img_start; // reset
 			if (cpi + 1 == DEPTH) begin
@@ -105,11 +107,11 @@ always @(posedge clk) begin
 		case (1) 
 			3'b000  : begin // Low pass filter
 				pixel_avg = 
-					full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
-					full_image[rpo-1][cpo] + full_image[rpo][cpo] + full_image[rpo+1][cpo] +
-					full_image[rpo-1][cpo+1] + full_image[rpo][cpo+1] + full_image[rpo+1][cpo+1];
+					raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
+					raw_image[rpo-1][cpo] + raw_image[rpo][cpo] + raw_image[rpo+1][cpo] +
+					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1];
 				pixel_avg = pixel_avg / 9;
-				image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+				processed_image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
 			end
 			3'b001 : begin // Median Filter
 				k = 0; 
@@ -118,19 +120,19 @@ always @(posedge clk) begin
 						if (i < 0 || j < 0 || i>WIDTH || j>DEPTH)
 							window[k*8+:8] = 128;
 						else
-							window[k*8+:8] = full_image[i][j][7:0];
+							window[k*8+:8] = raw_image[i][j][7:0];
 						k = k + 1;
 					end
 				end
-				image[rpo][cpo] = return_median(window);
+				processed_image[rpo][cpo] = return_median(window);
 			end
 			3'b010  : begin // High pass filter
-				pixel_avg = 8*full_image[rpo][cpo] - 
-					(full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
-					full_image[rpo-1][cpo] + full_image[rpo+1][cpo] +
-					full_image[rpo-1][cpo+1] + full_image[rpo][cpo+1] + full_image[rpo+1][cpo+1]);
+				pixel_avg = 8*raw_image[rpo][cpo] - 
+					(raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
+					raw_image[rpo-1][cpo] + raw_image[rpo+1][cpo] +
+					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1]);
 				pixel_avg = pixel_avg / 9;
-				image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+				processed_image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
 			end
 			default : begin
 			end 
@@ -152,7 +154,7 @@ always @(posedge clk) begin
 	
 	// Send processed image to output
 	if (finish && !done) begin
-		image_output = image[rpo][cpo];
+		image_output = processed_image[rpo][cpo];
 		if (rpo + 1 == WIDTH) begin
 			rpo = img_start;
 			if (cpo + 1 == DEPTH) begin
