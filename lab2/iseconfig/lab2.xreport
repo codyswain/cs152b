@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
+<<<<<<< HEAD
   <DateModified>2020-11-09T03:23:48</DateModified>
+=======
+  <DateModified>2020-11-06T10:45:41</DateModified>
+>>>>>>> deaddedb429cae519d4cd62f35939906bcd648ca
   <ModuleName>lab2</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>/home/ise/Xilinx_shared/cs152b/lab2/iseconfig/lab2.xreport</SavedFilePath>
