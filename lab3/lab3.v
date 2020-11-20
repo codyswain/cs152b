@@ -38,6 +38,7 @@ parameter DEPTH = 361;
 
 // Filter size determines image padding
 parameter FILTER_SIZE = 3;
+`include "MedianFilter.v"
 
 // Here add FILTER_SIZE // 2 
 // TODO: Right shift the parameter val??
@@ -117,8 +118,74 @@ always @(posedge clk) begin
 		end
 	end
 	
-	// HERE: Image loaded into full_image variable 410 x 361
+	// Processing
 	if (!enable && enable_process && !finish) begin
+		
+		// Case determines computation
+		case (2) 
+			3'b000  : begin // Low pass filter
+				pixel_avg = 
+					full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
+					full_image[rpo-1][cpo] + full_image[rpo][cpo] + full_image[rpo+1][cpo] +
+					full_image[rpo-1][cpo+1] + full_image[rpo][cpo+1] + full_image[rpo+1][cpo+1];
+				pixel_avg = pixel_avg / 9;
+				image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+			end
+			3'b001 : begin // Median Filter
+				image[rpo][cpo] = return_median(
+					{full_image[rpo-1][cpo-1], full_image[rpo][cpo-1], full_image[rpo+1][cpo-1],
+					full_image[rpo-1][cpo], full_image[rpo][cpo], full_image[rpo+1][cpo],
+					full_image[rpo-1][cpo+1], full_image[rpo][cpo+1], full_image[rpo+1][cpo+1]}
+				);
+			end
+			3'b010  : begin // High pass filter
+				pixel_avg = 8*full_image[rpo][cpo] - 
+					(full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
+					full_image[rpo-1][cpo] + full_image[rpo+1][cpo] +
+					full_image[rpo-1][cpo+1] + full_image[rpo][cpo+1] + full_image[rpo+1][cpo+1]);
+				pixel_avg = pixel_avg / 9;
+				image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
+			end
+			default : begin
+			end 
+		 endcase
+		 
+		 // Iterate through image cordinates
+		 if (rpo + 1 == WIDTH) begin
+			rpo = pad_half;
+			if (cpo + 1 == DEPTH) begin
+				cpo = pad_half;
+				finish = 1;
+			end else begin
+				cpo = cpo + 1; 
+			end
+		end else begin
+			rpo = rpo + 1;
+		end
+	end
+	
+	// Send processed image to output
+	if (finish && !done) begin
+		image_output = image[rpo1][cpo1];
+		if (rpo1 + 1 == WIDTH) begin
+			rpo1 = pad_half;
+			if (cpo1 + 1 == DEPTH) begin
+				done = 1;
+			end else begin
+				cpo1 = cpo1 + 1; 
+			end
+		end else begin
+			rpo1 = rpo1 + 1;
+		end
+	end
+	
+	
+end
+
+endmodule
+
+
+
 	
 		// Median Filter
 		// 1. For row, col, load cartesian product of (row-1,row,row+1)x(col-1,col,col+1)
@@ -141,47 +208,3 @@ always @(posedge clk) begin
 		// * with the value of the pixel at row, col
 		
 		// Write matrix to image output
-		
-		// Low pass filter
-		pixel_avg = 
-			full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
-			full_image[rpo-1][cpo] + full_image[rpo][cpo] + full_image[rpo+1][cpo] +
-			full_image[rpo-1][cpo+1] + full_image[rpo][cpo+1] + full_image[rpo+1][cpo+1];
-		
-		
-		// full_image[rpo][cpo-1] + full_image[rpo-1][cpo] + full_image[rpo+1][cpo]  + full_image[rpo][cpo+1] + full_image[rpo][cpo];
-		pixel_avg = pixel_avg / 9;
-		image[rpo][cpo] = pixel_avg[7:0];
-		
-		//pixel_avg = {2'b00, pixel_avg[7:2]};
-		if (rpo + 1 == WIDTH) begin
-			rpo = pad_half;
-			if (cpo + 1 == DEPTH) begin
-				cpo = pad_half;
-				finish = 1;
-			end else begin
-				cpo = cpo + 1; 
-			end
-		end else begin
-			rpo = rpo + 1;
-		end
-	end
-	
-	if (finish && !done) begin
-		image_output = image[rpo1][cpo1];
-		if (rpo1 + 1 == WIDTH) begin
-			rpo1 = pad_half;
-			if (cpo1 + 1 == DEPTH) begin
-				done = 1;
-			end else begin
-				cpo1 = cpo1 + 1; 
-			end
-		end else begin
-			rpo1 = rpo1 + 1;
-		end
-	end
-	
-	
-end
-
-endmodule

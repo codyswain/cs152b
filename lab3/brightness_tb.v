@@ -4,15 +4,15 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   21:55:36 11/18/2020
-// Design Name:   lab3
-// Module Name:   /home/ise/Xilinx_shared/cs152b/lab3/lab3_tb.v
+// Create Date:   06:05:00 11/20/2020
+// Design Name:   brightness
+// Module Name:   /home/ise/Xilinx_shared/cs152b/lab3/brightness_tb.v
 // Project Name:  lab3
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: lab3
+// Verilog Test Fixture created by ISE for module: brightness
 //
 // Dependencies:
 // 
@@ -22,10 +22,12 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module lab3_tb;
+module brightness_tb;
 
 	// Inputs
 	reg [7:0] image_input;
+	reg do_bright;
+	reg [7:0] bright;
 	reg enable;
 	reg enable_process;
 	reg clk;
@@ -42,8 +44,10 @@ module lab3_tb;
 	integer WIDTH, DEPTH;
 
 	// Instantiate the Unit Under Test (UUT)
-	lab3 uut (
+	brightness uut (
 		.image_input(image_input), 
+		.do_bright(do_bright), 
+		.bright(bright), 
 		.enable(enable), 
 		.enable_process(enable_process), 
 		.clk(clk), 
@@ -52,16 +56,18 @@ module lab3_tb;
 	);
 
 	initial begin
-	
 		// Initialize Inputs
 		image_input = 0;
+		do_bright = 1;
+		bright = 40;
 		enable = 0;
 		enable_process = 0;
 		clk = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-		
+        
+		// Add stimulus here
 		// Variable Assignment
 		WIDTH = 410;
 		DEPTH = 361;
