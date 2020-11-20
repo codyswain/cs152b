@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/ise/Xilinx_shared/cs152b/lab3/brightness_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/Xilinx_shared/cs152b/lab3/brightness_tb_isim_beh.wdb 
+Running: /home/ise/Xilinx_shared/cs152b/lab3/lab3_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/Xilinx_shared/cs152b/lab3/lab3_tb_isim_beh.wdb 
 ISim P.20131013 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -15,3 +15,4 @@ Simulator is doing circuit initialization process.
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 Finished circuit initialization process.
+# exit 0

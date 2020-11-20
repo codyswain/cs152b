@@ -58,7 +58,7 @@ module brightness_tb;
 	initial begin
 		// Initialize Inputs
 		image_input = 0;
-		do_bright = 1;
+		do_bright = 0;
 		bright = 40;
 		enable = 0;
 		enable_process = 0;

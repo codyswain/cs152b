@@ -32,67 +32,47 @@ input enable, enable_process, clk;
 output reg [7:0] image_output;
 output reg finish;
 
-// Image resolution
+// Image & Filter Size
 parameter WIDTH = 410;
 parameter DEPTH = 361;
-
-// Filter size determines image padding
 parameter FILTER_SIZE = 3;
 `include "MedianFilter.v"
 
-// Here add FILTER_SIZE // 2 
-// TODO: Right shift the parameter val??
-
 // This is the processed image
-reg [7:0] full_image[0:WIDTH+2][0:DEPTH+2];
-reg [7:0] image[0:WIDTH+2][0:DEPTH+2];
+reg [7:0] full_image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
+reg [7:0] image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
 
-// Used for tracking cur pos while filling in full_image
-reg [8:0] row_ptr_in;
-reg [8:0] col_ptr_in;
-
-// Used for tracking cur pos while writing output
+// Current position (input, output, output1) 
+reg [8:0] rpi;
+reg [8:0] cpi;
 reg [8:0] rpo;
 reg [8:0] cpo;
 
-// TEST
-reg [8:0] rpo1;
-reg [8:0] cpo1;
-
-// Padding to add to Width and Depth
-reg [3:0] pad_total;
-
-// Pointer adjustment for image pos with padding
-reg [3:0] pad_half; 
-
+// Actual image starting position (not padding)
+reg [3:0] img_start;
 integer row, col;
+integer i, j, k;
 
 // Medium Filter Pixel Average
 reg [10:0] pixel_avg;
 
+// Median Filter Variable Sized Window
+reg [FILTER_SIZE*FILTER_SIZE*8:0] window;
+
 reg done; 
 
 initial begin
-	// Adjust image width for padding
-	assign pad_total = FILTER_SIZE >> 1;
-	
-	// Adjust coordinate pointers for padding
-	// assign pad_half = FILTER_SIZE >> 2;
-	assign pad_half = 1; 
+	assign img_start = FILTER_SIZE >> 1;
 	
 	// Set inital values for reading pixels
-	row_ptr_in = pad_half;
-	col_ptr_in = pad_half; 
-	rpo = pad_half;
-	cpo = pad_half; 
-	
-	// TEMP 
-	rpo1 = pad_half;
-	cpo1 = pad_half; 
+	rpi = img_start;
+	cpi = img_start; 
+	rpo = img_start;
+	cpo = img_start;
 	
 	// Zero pad the 2D image matrix
-	for (row=0; row<WIDTH+pad_total; row=row+1) begin
-		for (col=0; col<DEPTH+pad_total; col=col+1) begin
+	for (row=0; row<WIDTH+(FILTER_SIZE-1); row=row+1) begin
+		for (col=0; col<DEPTH+(FILTER_SIZE-1); col=col+1) begin
 			full_image[row][col] = 0;
 			image[row][col] = 0;
 		end
@@ -105,16 +85,16 @@ end
 always @(posedge clk) begin
 	// Populate full_image matrix
 	if (enable) begin
-		full_image[row_ptr_in][col_ptr_in] = image_input;
-		if (row_ptr_in + 1 == WIDTH) begin
-			row_ptr_in = pad_half; // reset
-			if (col_ptr_in + 1 == DEPTH) begin
-				col_ptr_in = pad_half; // reset
+		full_image[rpi][cpi] = image_input;
+		if (rpi + 1 == WIDTH) begin
+			rpi = img_start; // reset
+			if (cpi + 1 == DEPTH) begin
+				cpi = img_start; // reset
 			end else begin
-				col_ptr_in = col_ptr_in + 1;
+				cpi = cpi + 1;
 			end
 		end else begin
-			row_ptr_in = row_ptr_in + 1;
+			rpi = rpi + 1;
 		end
 	end
 	
@@ -122,7 +102,7 @@ always @(posedge clk) begin
 	if (!enable && enable_process && !finish) begin
 		
 		// Case determines computation
-		case (2) 
+		case (1) 
 			3'b000  : begin // Low pass filter
 				pixel_avg = 
 					full_image[rpo-1][cpo-1] + full_image[rpo][cpo-1] + full_image[rpo+1][cpo-1] +
@@ -132,11 +112,17 @@ always @(posedge clk) begin
 				image[rpo][cpo] = pixel_avg[7:0]; //pixel_avg = {2'b00, pixel_avg[7:2]};
 			end
 			3'b001 : begin // Median Filter
-				image[rpo][cpo] = return_median(
-					{full_image[rpo-1][cpo-1], full_image[rpo][cpo-1], full_image[rpo+1][cpo-1],
-					full_image[rpo-1][cpo], full_image[rpo][cpo], full_image[rpo+1][cpo],
-					full_image[rpo-1][cpo+1], full_image[rpo][cpo+1], full_image[rpo+1][cpo+1]}
-				);
+				k = 0; 
+				for (i = rpo - (FILTER_SIZE /2); i <= rpo + (FILTER_SIZE /2); i=i+1) begin
+					for (j = cpo - (FILTER_SIZE /2); j <= cpo + (FILTER_SIZE /2); j=j+1) begin
+						if (i < 0 || j < 0 || i>WIDTH || j>DEPTH)
+							window[k*8+:8] = 128;
+						else
+							window[k*8+:8] = full_image[i][j][7:0];
+						k = k + 1;
+					end
+				end
+				image[rpo][cpo] = return_median(window);
 			end
 			3'b010  : begin // High pass filter
 				pixel_avg = 8*full_image[rpo][cpo] - 
@@ -152,9 +138,9 @@ always @(posedge clk) begin
 		 
 		 // Iterate through image cordinates
 		 if (rpo + 1 == WIDTH) begin
-			rpo = pad_half;
+			rpo = img_start;
 			if (cpo + 1 == DEPTH) begin
-				cpo = pad_half;
+				cpo = img_start;
 				finish = 1;
 			end else begin
 				cpo = cpo + 1; 
@@ -166,16 +152,16 @@ always @(posedge clk) begin
 	
 	// Send processed image to output
 	if (finish && !done) begin
-		image_output = image[rpo1][cpo1];
-		if (rpo1 + 1 == WIDTH) begin
-			rpo1 = pad_half;
-			if (cpo1 + 1 == DEPTH) begin
+		image_output = image[rpo][cpo];
+		if (rpo + 1 == WIDTH) begin
+			rpo = img_start;
+			if (cpo + 1 == DEPTH) begin
 				done = 1;
 			end else begin
-				cpo1 = cpo1 + 1; 
+				cpo = cpo + 1; 
 			end
 		end else begin
-			rpo1 = rpo1 + 1;
+			rpo = rpo + 1;
 		end
 	end
 	

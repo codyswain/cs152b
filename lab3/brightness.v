@@ -103,13 +103,13 @@ always @(posedge clk) begin
 		
 		// Increase or decrease brightness
 		if (do_bright) begin
-			if ((raw_image[rpo][cpo] + bright) > 255) begin
+			if (raw_image[rpo][cpo] > 255 - bright) begin
 				processed_image[rpo][cpo] = 255;
 			end else begin
 				processed_image[rpo][cpo] = raw_image[rpo][cpo] + bright;
 			end
 		end else begin
-			if ((raw_image[rpo][cpo] - bright) < 0) begin
+			if (raw_image[rpo][cpo] < bright) begin
 				processed_image[rpo][cpo] = 0;
 			end else begin
 				processed_image[rpo][cpo] = raw_image[rpo][cpo] - bright;
