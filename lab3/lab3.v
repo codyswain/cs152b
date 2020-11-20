@@ -38,6 +38,7 @@ parameter WIDTH = 410;
 parameter DEPTH = 361;
 parameter FILTER_SIZE = 3;
 `include "MedianFilter.v"
+`include "ReduceAverage.v"
 
 // Raw & Processed Image Memory
 reg [7:0] raw_image[0:WIDTH+(FILTER_SIZE/2)][0:DEPTH+(FILTER_SIZE/2)];
@@ -51,6 +52,8 @@ reg [8:0] rpi;
 reg [8:0] cpi;
 reg [8:0] rpo;
 reg [8:0] cpo;
+reg [8:0] rpo1;
+reg [8:0] cpo1;
 
 // Median Filter Variables
 reg [10:0] pixel_avg;
@@ -73,6 +76,7 @@ initial begin
 	cpi = img_start; 
 	rpo = img_start;
 	cpo = img_start;
+	rpo1 = 0; cpo1 = 0;
 	
 	// Zero pad the 2D image matrices
 	for (row=0; row<WIDTH+(FILTER_SIZE-1); row=row+1) begin
@@ -81,6 +85,8 @@ initial begin
 			processed_image[row][col] = 0;
 		end
 	end
+
+	window = 0;
 end
 
 
@@ -103,15 +109,17 @@ always @(posedge clk) begin
 	
 	// Filtering / Image Processing
 	if (!enable && enable_process && !finish) begin
-		case (1) 
+		case (3) 
 		
 			// Low Pass Filter
 			3'b000  : begin
-				pixel_avg = 
-					raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
-					raw_image[rpo-1][cpo] + raw_image[rpo][cpo] + raw_image[rpo+1][cpo] +
-					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1];
-				pixel_avg = pixel_avg / 9;
+				pixel_avg = 0;
+				for (i = rpo - (FILTER_SIZE /2); i <= rpo + (FILTER_SIZE /2); i=i+1) begin
+					for (j = cpo - (FILTER_SIZE /2); j <= cpo + (FILTER_SIZE /2); j=j+1) begin
+						pixel_avg = pixel_avg + raw_image[i][j];
+					end
+				end
+				pixel_avg = pixel_avg / (FILTER_SIZE*FILTER_SIZE);
 				processed_image[rpo][cpo] = pixel_avg[7:0];
 			end
 			
@@ -132,19 +140,39 @@ always @(posedge clk) begin
 			
 			// High Pass Filter
 			3'b010  : begin
-				pixel_avg = 8*raw_image[rpo][cpo] - 
-					(raw_image[rpo-1][cpo-1] + raw_image[rpo][cpo-1] + raw_image[rpo+1][cpo-1] +
-					raw_image[rpo-1][cpo] + raw_image[rpo+1][cpo] +
-					raw_image[rpo-1][cpo+1] + raw_image[rpo][cpo+1] + raw_image[rpo+1][cpo+1]);
-				pixel_avg = pixel_avg / 9;
+				pixel_avg = 0;
+				for (i = rpo - (FILTER_SIZE /2); i <= rpo + (FILTER_SIZE /2); i=i+1) begin
+					for (j = cpo - (FILTER_SIZE /2); j <= cpo + (FILTER_SIZE /2); j=j+1) begin
+						if (i != rpo && j != cpo) begin
+							pixel_avg = pixel_avg + raw_image[i][j];
+						end
+					end
+				end
+				pixel_avg = (pixel_avg + (FILTER_SIZE-1)*raw_image[i][j]) / (FILTER_SIZE*FILTER_SIZE);
 				processed_image[rpo][cpo] = pixel_avg[7:0];
 			end
 			default : begin
 			end 
+			
+			// Reduction
+			3'b011 : begin
+				k = 0; 
+				for (i = (rpo1 - (rpo1%FILTER_SIZE)) - (FILTER_SIZE /2); i <= (rpo1 - (rpo1 % FILTER_SIZE)) + (FILTER_SIZE /2); i=i+1) begin
+					for (j = (cpo1 - (cpo1%FILTER_SIZE)) - (FILTER_SIZE /2); j <= (cpo1 - (cpo1%FILTER_SIZE)) + (FILTER_SIZE /2); j=j+1) begin
+						if (i < 0 || j < 0 || i>WIDTH || j>DEPTH)
+							window[k*8+:8] = 128;
+						else
+							window[k*8+:8] = raw_image[i][j][7:0];
+						k = k + 1;
+					end
+				end
+				processed_image[rpo1][cpo1] = return_average(window); 
+			end
+			
 		 endcase
 		 
-		 // Update current row & col positions
-		 if (rpo + 1 == WIDTH) begin
+		// Update current row & col positions
+		if (rpo + 1 == WIDTH) begin
 			rpo = img_start;
 			if (cpo + 1 == DEPTH) begin
 				cpo = img_start;
@@ -154,6 +182,19 @@ always @(posedge clk) begin
 			end
 		end else begin
 			rpo = rpo + 1;
+		end
+		
+		// Update counters for image reduction
+		if (rpo1 == WIDTH) begin
+			rpo1 = 0;
+			if (cpo1 == DEPTH) begin
+				cpo1 = 0;
+				finish = 1;
+			end else begin
+				cpo1 = cpo1 + 1; 
+			end
+		end else begin
+			rpo1 = rpo1 + 1;
 		end
 	end
 	

@@ -72,7 +72,7 @@ module lab3_tb;
 			$display("Input file not opened successfully: %0d", fd_in);
 			$finish;
 		end
-		fd_out = $fopen("median_filter.text", "w");
+		fd_out = $fopen("reduced_5.text", "w");
 		if (!fd_out) begin
 			$display("Output file not opened successfully: %0d", fd_out);
 			$finish;

@@ -24,6 +24,7 @@
   <files xmlns="http://www.xilinx.com/XMLSchema">
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="brightness_tb_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="increase_tb_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="isim.log"/>
@@ -35,41 +36,47 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1605855024" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1605855024">
+    <transform xil_pn:end_ts="1605870517" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1605870517">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1605858120" xil_pn:in_ck="-3374272482339186424" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1605858120">
-      <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
-      <outfile xil_pn:name="MedianFilter.v"/>
-      <outfile xil_pn:name="brightness.v"/>
-      <outfile xil_pn:name="brightness_tb.v"/>
-      <outfile xil_pn:name="lab3.v"/>
-      <outfile xil_pn:name="lab3_tb.v"/>
-    </transform>
-    <transform xil_pn:end_ts="1605855024" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-3831494776306293714" xil_pn:start_ts="1605855024">
-      <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
-    </transform>
-    <transform xil_pn:end_ts="1605855024" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="4361151084914825196" xil_pn:start_ts="1605855024">
-      <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
-    </transform>
-    <transform xil_pn:end_ts="1605855024" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-8866501710127512536" xil_pn:start_ts="1605855024">
-      <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
-    </transform>
-    <transform xil_pn:end_ts="1605858120" xil_pn:in_ck="-3374272482339186424" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1605858120">
+    <transform xil_pn:end_ts="1605876494" xil_pn:in_ck="-5976547327796449552" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1605876494">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="MedianFilter.v"/>
+      <outfile xil_pn:name="ReduceAverage.v"/>
       <outfile xil_pn:name="brightness.v"/>
       <outfile xil_pn:name="brightness_tb.v"/>
+      <outfile xil_pn:name="increase.v"/>
+      <outfile xil_pn:name="increase_tb.v"/>
       <outfile xil_pn:name="lab3.v"/>
       <outfile xil_pn:name="lab3_tb.v"/>
     </transform>
-    <transform xil_pn:end_ts="1605858128" xil_pn:in_ck="-3374272482339186424" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="3035865935094682075" xil_pn:start_ts="1605858120">
+    <transform xil_pn:end_ts="1605875083" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-3831494776306293714" xil_pn:start_ts="1605875083">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1605875083" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="4361151084914825196" xil_pn:start_ts="1605875083">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1605870518" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-8866501710127512536" xil_pn:start_ts="1605870518">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1605876494" xil_pn:in_ck="-5976547327796449552" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1605876494">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="MedianFilter.v"/>
+      <outfile xil_pn:name="ReduceAverage.v"/>
+      <outfile xil_pn:name="brightness.v"/>
+      <outfile xil_pn:name="brightness_tb.v"/>
+      <outfile xil_pn:name="increase.v"/>
+      <outfile xil_pn:name="increase_tb.v"/>
+      <outfile xil_pn:name="lab3.v"/>
+      <outfile xil_pn:name="lab3_tb.v"/>
+    </transform>
+    <transform xil_pn:end_ts="1605876501" xil_pn:in_ck="-5976547327796449552" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="3035865935094682075" xil_pn:start_ts="1605876494">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
@@ -81,7 +88,7 @@
       <outfile xil_pn:name="lab3_tb_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1605858129" xil_pn:in_ck="-3053140880695604829" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-4491088788893596602" xil_pn:start_ts="1605858128">
+    <transform xil_pn:end_ts="1605876502" xil_pn:in_ck="4839325125387506257" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-2799906315469074650" xil_pn:start_ts="1605876501">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="isim.cmd"/>

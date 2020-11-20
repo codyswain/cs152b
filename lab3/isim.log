@@ -10,8 +10,10 @@ This is a Full version of ISim.
 Time resolution is 1 ps
 # onerror resume
 # wave add /
-# run 900000 ns
+# run 90000000 ns
 Simulator is doing circuit initialization process.
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 WARNING: File/Multi-channel descriptor (-1) passed to $fclose is not valid
 Finished circuit initialization process.
+Stopped at time : 2789669 ns : File "/home/ise/Xilinx_shared/cs152b/lab3/lab3.v" Line 93
+# exit 0
